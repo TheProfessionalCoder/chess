@@ -1,0 +1,76 @@
+class ChessGame:
+    def __init__(self):
+        self.board = self.create_board()
+        self.current_player = "White"
+        self.game_over = False
+
+    def create_board(self):
+        board = {}
+        for i in range(8):
+            for j in range(8):
+                board[(i, j)] = None
+        # Place initial pieces
+        board[(0, 0)] = "bR"
+        board[(0, 1)] = "bN"
+        board[(0, 2)] = "bB"
+        board[(0, 3)] = "bQ"
+        board[(0, 4)] = "bK"
+        board[(0, 5)] = "bB"
+        board[(0, 6)] = "bN"
+        board[(0, 7)] = "bR"
+        board[(1, 0)] = "bp"
+        board[(1, 1)] = "bp"
+        board[(1, 2)] = "bp"
+        board[(1, 3)] = "bp"
+        board[(1, 4)] = "bp"
+        board[(1, 5)] = "bp"
+        board[(1, 6)] = "bp"
+        board[(1, 7)] = "bp"
+        board[(7, 0)] = "wR"
+        board[(7, 1)] = "wN"
+        board[(7, 2)] = "wB"
+        board[(7, 3)] = "wQ"
+        board[(7, 4)] = "wK"
+        board[(7, 5)] = "wB"
+        board[(7, 6)] = "wN"
+        board[(7, 7)] = "wR"
+        board[(6, 0)] = "wp"
+        board[(6, 1)] = "wp"
+        board[(6, 2)] = "wp"
+        board[(6, 3)] = "wp"
+        board[(6, 4)] = "wp"
+        board[(6, 5)] = "wp"
+        board[(6, 6)] = "wp"
+        board[(6, 7)] = "wp"
+        return board
+
+    def print_board(self):
+        for i in range(8):
+            for j in range(8):
+                piece = self.board[(i, j)]
+                if piece is None:
+                    print(".", end=" ")
+                else:
+                    print(piece, end=" ")
+            print()
+        print()
+
+    def move_piece(self, start_pos, end_pos):
+        piece = self.board[start_pos]
+        if piece is None:
+            print("No piece at the given position.")
+            return False
+        if not self.is_valid_move(piece, start_pos, end_pos):
+            print("Invalid move.")
+            return False
+        self.board[end_pos] = piece
+        self.board[start_pos] = None
+        self.current_player = "Black" if self.current_player == "White" else "White"
+        return True
+
+    def is_valid_move(self, piece, start_pos, end_pos):
+        if piece[0] != self.current_player[0].lower():
+            return False
+
+        if piece[1] == "p":
+            return self
